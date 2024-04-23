@@ -1,13 +1,13 @@
-//https://deadsimplechat.com/blog/environment-variables-in-nodejs/
-//https://learn.microsoft.com/en-us/azure/ai-services/language-service/sentiment-opinion-mining/quickstart?tabs=linux&pivots=programming-language-csharp
-//https://www.yourteaminindia.com/tech-insights/sentiment-analysis-with-node.js-and-ai
+// https://deadsimplechat.com/blog/environment-variables-in-nodejs/
+// https://learn.microsoft.com/en-us/azure/ai-services/language-service/sentiment-opinion-mining/quickstart?tabs=linux&pivots=programming-language-csharp
+// https://www.yourteaminindia.com/tech-insights/sentiment-analysis-with-node.js-and-ai
 
-//Office Hour Questions
-//  how many methods should we show?
-//  is swagger fine for documentation?
-//  is this fine to show azure...like should I be doing more?
-//      like adding input fields and subbing that in for the text
-//  help displaying the data....if I can't get it beforehand
+// add swagger
+// add ReadMe
+// add more methods
+    // make reuseable confidence that can be access through a different function
+    // better to modularize it -- having a making the call a separate function
+// digital ocean and pm2 
 
 const express = require('express');
 const app = express();
@@ -23,15 +23,14 @@ app.get('/', (req, res) => {
     res.send('hello');
 });
 
-// maybe change this method set up...attempted but wasn't working
-const tester = async () => {
+const tester = async (text) => {
     try {
         const response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
             documents: [
                 {
                     language: 'en',
                     id: '1',
-                    text: analysisText,
+                    text: text,
                 },
             ],
         }, {
@@ -44,7 +43,7 @@ const tester = async () => {
         const sentimentScore = response.data.documents[0].sentiment;
 
         console.log(`Sentiment: ${sentimentScore}`);
-        return `Sentiment: ${sentimentScore}`;
+        return response.data;
     }
 
     catch (error) {
@@ -52,47 +51,23 @@ const tester = async () => {
     }
 };
 
-app.get('/azure', (req, res) => {
-    res.send(tester());
+app.get('/v1/azure', (req, res) => {
+    let response;
+    tester(analysisText)
+        .then((data)=> {
+            response=data;
+            res.json({"response": response});
+    });
 });
 
-// attempt at a new method set up
-app.get('/testing', (req, res) => {
-    try{
-        const testingWord = 'I dont like this! This was terrible!';
-
-        const options = {
-            method: 'POST',
-            url: `${endpoint}/text/analytics/v3.0/sentiment`,
-            params: {
-                documents: [
-                    {
-                        language: 'en',
-                        id: '2',
-                        text: testingWord,
-                    },
-                ]
-            },
-            headers: {
-                'Ocp-Apim-Subscription-Key': key,
-                'Content-Type': 'application/json',
-            }
-        }
-
-        const response = 'response from azure';
-
-        axios(options)
-            .then(resp => {
-                if(resp.data) {
-                    response = resp.data
-                    res.send(response)
-                }
-            })        
-    }
-
-    catch (error) {
-        console.log(error+'\n'+'Theres an ERROR');
-    }
+app.get('/v1/azure/:sentiment', (req, res) => {
+    var text = req.params.sentiment;
+    let response;
+    tester(text)
+        .then((data)=> {
+            response=data;
+            res.json({"response": response});
+    });
 });
 
 app.listen(port, () => {
