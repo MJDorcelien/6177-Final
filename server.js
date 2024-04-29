@@ -51,6 +51,7 @@ const tester = async (text) => {
     }
 };
 
+// gives you response based on pre-determined sentence
 app.get('/v1/azure', (req, res) => {
     let response;
     tester(analysisText)
@@ -60,8 +61,47 @@ app.get('/v1/azure', (req, res) => {
     });
 });
 
+// gives you response based on what the user inputs
 app.get('/v1/azure/:sentiment', (req, res) => {
     var text = req.params.sentiment;
+    let response;
+    tester(text)
+        .then((data)=> {
+            response=data;
+            res.json({"response": response});
+    });
+});
+
+// NEED TO IMPLEMENT
+// gives you breakdown of what was positive and negatives (1 json, 2 objects)
+// can provide paragraph or sentence
+app.get('/v1/azure/:paragraph', (req, res) => {
+    var text = req.params.paragraph;
+    let response;
+    tester(text)
+        .then((data)=> {
+            response=data;
+            res.json({"response": response});
+    });
+});
+
+// NEED TO IMPLEMENT
+// gives you confidence scores based on user input
+// can provide paragraph or sentence
+app.get('/v1/azure/:confidence', (req, res) => {
+    var text = req.params.confidence;
+    let response;
+    tester(text)
+        .then((data)=> {
+            response=data;
+            res.json({"response": response});
+    });
+});
+
+// NEED TO IMPLEMENT
+// gives you DONT KNOW YET
+app.get('/v1/azure/:notsure', (req, res) => {
+    var text = req.params.notsure;
     let response;
     tester(text)
         .then((data)=> {
