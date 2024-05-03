@@ -17,14 +17,47 @@ const axios = require('axios');
 const key = process.env.LANGUAGE_KEY;
 const endpoint = process.env.LANGUAGE_ENDPOINT;
 
-const analysisText = 'I love this product! Its fantastic';
+let resp;
 
 app.get('/', (req, res) => {
     res.send('hello');
 });
-
-const tester = async (text) => {
+             
+// gives you response based on pre-determined sentence
+app.get('/v1/azure', async (req, res) => {
     try {
+        const response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
+            documents: [
+                {
+                    language: 'en',
+                    id: '1',
+                    text: 'I love this product! Its fantastic',
+                },
+            ],
+        }, {
+            headers: {
+                'Ocp-Apim-Subscription-Key': key,
+                'Content-Type': 'application/json',
+            }
+        });
+
+        const sentimentScore = response.data.documents[0].sentiment;
+        console.log(`Sentiment: ${sentimentScore}`);
+
+        resp = response.data;
+
+        return res.json(resp);
+    }
+
+    catch (error) {
+        console.log(error+'\n'+'Theres an ERROR');
+    }
+});
+
+// gives you response based on user input
+app.get('/v1/azure/:response', async (req, res) => {
+    try {
+        var text = req.params.response;
         const response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
             documents: [
                 {
@@ -41,74 +74,199 @@ const tester = async (text) => {
         });
 
         const sentimentScore = response.data.documents[0].sentiment;
-
         console.log(`Sentiment: ${sentimentScore}`);
-        return response.data;
+
+        resp = response.data;
+
+        return res.json(resp);
     }
 
     catch (error) {
         console.log(error+'\n'+'Theres an ERROR');
     }
-};
-
-// gives you response based on pre-determined sentence
-app.get('/v1/azure', (req, res) => {
-    let response;
-    tester(analysisText)
-        .then((data)=> {
-            response=data;
-            res.json({"response": response});
-    });
 });
 
-// gives you response based on what the user inputs
-app.get('/v1/azure/:sentiment', (req, res) => {
-    var text = req.params.sentiment;
-    let response;
-    tester(text)
-        .then((data)=> {
-            response=data;
-            res.json({"response": response});
-    });
+// gives you sentiment score based on user input
+app.get('/v1/azure/:sentiment', async (req, res) => {
+    try {
+        var text = req.params.sentiment;
+        const response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
+            documents: [
+                {
+                    language: 'en',
+                    id: '1',
+                    text: text,
+                },
+            ],
+        }, {
+            headers: {
+                'Ocp-Apim-Subscription-Key': key,
+                'Content-Type': 'application/json',
+            }
+        });
+
+        const sentimentScore = response.data.documents[0].sentiment;
+        console.log(`Sentiment: ${sentimentScore}`);
+
+        resp = {"sentiment": sentimentScore};
+
+        return res.json(resp);
+    }
+
+    catch (error) {
+        console.log(error+'\n'+'Theres an ERROR');
+    }
 });
 
-// NEED TO IMPLEMENT
-// gives you breakdown of what was positive and negatives (1 json, 2 objects)
-// can provide paragraph or sentence
-app.get('/v1/azure/:paragraph', (req, res) => {
-    var text = req.params.paragraph;
-    let response;
-    tester(text)
-        .then((data)=> {
-            response=data;
-            res.json({"response": response});
-    });
-});
-
-// NEED TO IMPLEMENT
 // gives you confidence scores based on user input
-// can provide paragraph or sentence
-app.get('/v1/azure/:confidence', (req, res) => {
-    var text = req.params.confidence;
-    let response;
-    tester(text)
-        .then((data)=> {
-            response=data;
-            res.json({"response": response});
-    });
+app.get('/v1/azure/:confidence', async (req, res) => {
+    try {
+        var text = req.params.confidence;
+        const response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
+            documents: [
+                {
+                    language: 'en',
+                    id: '1',
+                    text: text,
+                },
+            ],
+        }, {
+            headers: {
+                'Ocp-Apim-Subscription-Key': key,
+                'Content-Type': 'application/json',
+            }
+        });
+
+        const sentimentScore = response.data.documents[0].sentiment;
+        console.log(`Sentiment: ${sentimentScore}`);
+
+        resp = response.data;
+
+        return res.json(resp);
+    }
+
+    catch (error) {
+        console.log(error+'\n'+'Theres an ERROR');
+    }
 });
 
-// NEED TO IMPLEMENT
-// gives you DONT KNOW YET
-app.get('/v1/azure/:notsure', (req, res) => {
-    var text = req.params.notsure;
-    let response;
-    tester(text)
-        .then((data)=> {
-            response=data;
-            res.json({"response": response});
-    });
+// gives you breakdown for each sentence (text, sentiment, and confidence scores)
+app.get('/v1/azure/:paragraph', async (req, res) => {
+    try {
+        var text = req.params.paragraph;
+        const response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
+            documents: [
+                {
+                    language: 'en',
+                    id: '1',
+                    text: text,
+                },
+            ],
+        }, {
+            headers: {
+                'Ocp-Apim-Subscription-Key': key,
+                'Content-Type': 'application/json',
+            }
+        });
+
+        const sentimentScore = response.data.documents[0].sentiment;
+        console.log(`Sentiment: ${sentimentScore}`);
+
+        resp = {"confidencescores": response.data.documents[0].confidencescores};
+
+        return res.json(resp);
+    }
+
+    catch (error) {
+        console.log(error+'\n'+'Theres an ERROR');
+    }
 });
+
+// gives you breakdown for sentiments (positive, neutral, and negative)
+app.get('/v1/azure/:scores', async (req, res) => {
+        // // x=data;
+        // let sentences = data.documents[0].sentences[0].sentiment;
+        // // console.log(sentences + " hi");
+        // // // res.json({"x": x});
+        // resp = {
+        //     "positive": [],
+        //     "negative": [],
+        //     "neutral": []
+        // }
+        // res.json(resp);
+
+    try {
+        var text = req.params.scores;
+        const response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
+                documents: [
+                    {
+                        language: 'en',
+                        id: '1',
+                        text: text,
+                    },
+                ],
+            }, {
+                headers: {
+                    'Ocp-Apim-Subscription-Key': key,
+                    'Content-Type': 'application/json',
+                }
+            });
+
+        const sentimentScore = response.data.documents[0].sentiment;
+        console.log(`Sentiment: ${sentimentScore}`);
+
+        resp = {"confidencescores": response.data.documents[0].confidencescores};
+
+        return res.json(resp);
+    }
+
+    catch (error) {
+        console.log(error+'\n'+'Theres an ERROR');  
+    }
+});
+
+// gives you breakdown for sentiments ranked from most to least positive (positive, neutral, and negative)
+app.get('/v1/azure/:scoresranked', async (req, res) => {
+        // // x=data;
+        // let sentences = data.documents[0].sentences[0].sentiment;
+        // // console.log(sentences + " hi");
+        // // // res.json({"x": x});
+        // resp = {
+        //     "positive": [],
+        //     "negative": [],
+        //     "neutral": []
+        // }
+        // res.json(resp);
+
+    try {
+        var text = req.params.scoresranked;
+        const response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
+            documents: [
+                {
+                    language: 'en',
+                    id: '1',
+                    text: text,
+                },
+            ],
+        }, {
+            headers: {
+                'Ocp-Apim-Subscription-Key': key,
+                'Content-Type': 'application/json',
+            }
+        });
+
+        const sentimentScore = response.data.documents[0].sentiment;
+        console.log(`Sentiment: ${sentimentScore}`);
+
+        resp = {"confidencescores": response.data.documents[0].confidencescores};
+
+        return res.json(resp);
+    }
+
+    catch (error) {
+    console.log(error+'\n'+'Theres an ERROR');
+    }
+    });
 
 app.listen(port, () => {
     console.log(`API served at http://localhost:${port}`);
