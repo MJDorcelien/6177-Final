@@ -17,7 +17,7 @@ const axios = require('axios');
 const key = process.env.LANGUAGE_KEY;
 const endpoint = process.env.LANGUAGE_ENDPOINT;
 
-let resp;
+var resp;
 
 app.get('/', (req, res) => {
     res.send('hello');
@@ -138,9 +138,10 @@ app.get('/v1/azure/:confidence', async (req, res) => {
         });
 
         const sentimentScore = response.data.documents[0].sentiment;
+        const confidenceScore = response.data.documents[0].confidenceScores;
         console.log(`Sentiment: ${sentimentScore}`);
 
-        resp = response.data;
+        resp = {"confidenceScore": confidenceScore};
 
         return res.json(resp);
     }
@@ -172,7 +173,9 @@ app.get('/v1/azure/:paragraph', async (req, res) => {
         const sentimentScore = response.data.documents[0].sentiment;
         console.log(`Sentiment: ${sentimentScore}`);
 
-        resp = {"confidencescores": response.data.documents[0].confidencescores};
+        // could order them and separate details...maybe
+        const sentences = response.data.documents[0].sentences;
+        resp = {"sentences": sentences};
 
         return res.json(resp);
     }
@@ -182,19 +185,8 @@ app.get('/v1/azure/:paragraph', async (req, res) => {
     }
 });
 
-// gives you breakdown for sentiments (positive, neutral, and negative)
+// gives you which sentences have which sentiments (positive, neutral, and negative)
 app.get('/v1/azure/:scores', async (req, res) => {
-        // // x=data;
-        // let sentences = data.documents[0].sentences[0].sentiment;
-        // // console.log(sentences + " hi");
-        // // // res.json({"x": x});
-        // resp = {
-        //     "positive": [],
-        //     "negative": [],
-        //     "neutral": []
-        // }
-        // res.json(resp);
-
     try {
         var text = req.params.scores;
         const response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
@@ -215,7 +207,24 @@ app.get('/v1/azure/:scores', async (req, res) => {
         const sentimentScore = response.data.documents[0].sentiment;
         console.log(`Sentiment: ${sentimentScore}`);
 
-        resp = {"confidencescores": response.data.documents[0].confidencescores};
+        let sentences = response.data.documents[0].sentences;
+        resp = {
+            "positive": [],
+            "neutral": [],
+            "negative": []
+        }
+        
+        sentences.forEach(sentence => {
+            if(sentence.sentiment === "positive"){
+                resp.positive.push(`${sentence.text}`);
+            }
+            else if(sentence.sentiment === "neutral"){
+                resp.neutral.push(`${sentence.text}`);
+            }
+            else {
+                resp.negative.push(`${sentence.text}`);
+            }
+        });
 
         return res.json(resp);
     }
@@ -225,19 +234,8 @@ app.get('/v1/azure/:scores', async (req, res) => {
     }
 });
 
-// gives you breakdown for sentiments ranked from most to least positive (positive, neutral, and negative)
-app.get('/v1/azure/:scoresranked', async (req, res) => {
-        // // x=data;
-        // let sentences = data.documents[0].sentences[0].sentiment;
-        // // console.log(sentences + " hi");
-        // // // res.json({"x": x});
-        // resp = {
-        //     "positive": [],
-        //     "negative": [],
-        //     "neutral": []
-        // }
-        // res.json(resp);
-
+// gives you breakdown for sentiments and ranking of the positive score
+app.get('/v1/azure/:scorespositive', async (req, res) => {
     try {
         var text = req.params.scoresranked;
         const response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
@@ -258,7 +256,24 @@ app.get('/v1/azure/:scoresranked', async (req, res) => {
         const sentimentScore = response.data.documents[0].sentiment;
         console.log(`Sentiment: ${sentimentScore}`);
 
-        resp = {"confidencescores": response.data.documents[0].confidencescores};
+        let sentences = response.data.documents[0].sentences;
+        resp = {
+            "positive": [],
+            "neutral": [],
+            "negative": []
+        }
+        
+        sentences.forEach(sentence => {
+            if(sentence.sentiment === "positive"){                
+                resp.positive.push([sentence.confidenceScores.positive, sentence.text]);
+            }
+            else if(sentence.sentiment === "neutral"){
+                resp.neutral.push([sentence.confidenceScores.positive, sentence.text]);
+            }
+            else {
+                resp.negative.push([sentence.confidenceScores.positive,sentence.text]);
+            }
+        });
 
         return res.json(resp);
     }
