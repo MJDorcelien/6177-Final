@@ -180,7 +180,7 @@ app.get('/v1/azure/sentiment/:sentiment', async (req, res) => {
  *          200:
  *              description: Object containing the confidence scores for the overall analysis. The confidence score contains the positive, neutral, and negative confidence scores.
  */
-app.get('/v1/azure/:confidence', async (req, res) => {
+app.get('/v1/azure/confidence/:confidence', async (req, res) => {
     try {
         var text = req.params.confidence;
         let response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
