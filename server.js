@@ -2,31 +2,51 @@
 // https://learn.microsoft.com/en-us/azure/ai-services/language-service/sentiment-opinion-mining/quickstart?tabs=linux&pivots=programming-language-csharp
 // https://www.yourteaminindia.com/tech-insights/sentiment-analysis-with-node.js-and-ai
 
-// add swagger
-// add ReadMe
-// add more methods
-    // make reuseable confidence that can be access through a different function
-    // better to modularize it -- having a making the call a separate function
-// digital ocean and pm2 
-
 const express = require('express');
 const app = express();
+
+const axios = require('axios');
+
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+const cors = require('cors');
+
 require('dotenv').config();
 const port = process.env.PORT || 4000;
-const axios = require('axios');
 const key = process.env.LANGUAGE_KEY;
 const endpoint = process.env.LANGUAGE_ENDPOINT;
 
-var resp;
+const options = {
+    swaggerDefinition: {
+        info: {
+            title: '6177 Final Project',
+            version: '1.0.0',
+            description: 'Final project for system integration. The project is an express application which utilizes azure to complete sentiment analysis.',
+        },
+        host: 'localhost:3000',
+        basePath: '/v1/',
+    },
+    apis: ['./server.js'],
+}
+const specs = swaggerJsdoc(options);
 
-app.get('/', (req, res) => {
-    res.send('hello');
-});
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs));
+app.use(cors());
              
-// gives you response based on pre-determined sentence
+/**
+ * @swagger
+ * /azure:
+ *     get:
+ *       description: Returns response based on pre-determined sentence "I love this product! Its fantastic"
+ *       produces: 
+ *          - application/json
+ *       responses:
+ *          200:
+ *              description: Object containing the overall sentiment and confidence scores. Also returns a breakdown for each sentence. The breakdown includes the text, length, sentiment, confidence scores, and offset.
+ */
 app.get('/v1/azure', async (req, res) => {
     try {
-        const response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
+        let response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
             documents: [
                 {
                     language: 'en',
@@ -41,12 +61,13 @@ app.get('/v1/azure', async (req, res) => {
             }
         });
 
-        const sentimentScore = response.data.documents[0].sentiment;
+        let sentimentScore = response.data.documents[0].sentiment;
         console.log(`Sentiment: ${sentimentScore}`);
+        console.log("azure");
 
-        resp = response.data;
+        let resp = response.data;
 
-        return res.json(resp);
+        res.json(resp);
     }
 
     catch (error) {
@@ -54,10 +75,24 @@ app.get('/v1/azure', async (req, res) => {
     }
 });
 
-// gives you response based on user input
+/**
+ * @swagger
+ * /azure/response:
+ *     get:
+ *       description: Returns response based on user input
+ *       produces: 
+ *          - application/json
+*       parameters:
+ *          - in: path
+ *            name: response
+ *            description: Statement from the user to input for sentiment analysis
+ *       responses:
+ *          200:
+ *              description: Object containing the overall sentiment and confidence scores. Also returns a breakdown for each sentence. The breakdown includes the text, length, sentiment, confidence scores, and offset.
+ */
 app.get('/v1/azure/:response', async (req, res) => {
     try {
-        var text = req.params.response;
+        const text = req.params.response;
         const response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
             documents: [
                 {
@@ -75,10 +110,11 @@ app.get('/v1/azure/:response', async (req, res) => {
 
         const sentimentScore = response.data.documents[0].sentiment;
         console.log(`Sentiment: ${sentimentScore}`);
+        console.log('azure/response');
 
-        resp = response.data;
+        const resp = response.data;
 
-        return res.json(resp);
+        res.json(resp);
     }
 
     catch (error) {
@@ -86,10 +122,24 @@ app.get('/v1/azure/:response', async (req, res) => {
     }
 });
 
-// gives you sentiment score based on user input
+/**
+ * @swagger
+ * /azure/sentiment:
+ *     get:
+ *       description: gives you sentiment score based on user input
+ *       produces: 
+ *          - application/json
+*       parameters:
+ *          - in: path
+ *            name: sentiment
+ *            description: Statement from the user to input for sentiment analysis
+ *       responses:
+ *          200:
+ *              description: Object containing the overall sentiment of the input
+ */
 app.get('/v1/azure/:sentiment', async (req, res) => {
     try {
-        var text = req.params.sentiment;
+        const text = req.params.sentiment;
         const response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
             documents: [
                 {
@@ -107,10 +157,11 @@ app.get('/v1/azure/:sentiment', async (req, res) => {
 
         const sentimentScore = response.data.documents[0].sentiment;
         console.log(`Sentiment: ${sentimentScore}`);
+        console.log('azure/sentiment');
 
-        resp = {"sentiment": sentimentScore};
+        const resp = {"sentiment": sentimentScore};
 
-        return res.json(resp);
+        res.json(resp);
     }
 
     catch (error) {
@@ -118,11 +169,25 @@ app.get('/v1/azure/:sentiment', async (req, res) => {
     }
 });
 
-// gives you confidence scores based on user input
+/**
+ * @swagger
+ * /azure/confidence:
+ *     get:
+ *       description: Returns confidence scores based on user input
+ *       produces: 
+ *          - application/json
+*       parameters:
+ *          - in: path
+ *            name: confidence
+ *            description: Statement from the user to input for sentiment analysis
+ *       responses:
+ *          200:
+ *              description: Object containing the confidence scores for the overall analysis. The confidence score contains the positive, neutral, and negative confidence scores.
+ */
 app.get('/v1/azure/:confidence', async (req, res) => {
     try {
         var text = req.params.confidence;
-        const response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
+        let response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
             documents: [
                 {
                     language: 'en',
@@ -137,13 +202,14 @@ app.get('/v1/azure/:confidence', async (req, res) => {
             }
         });
 
-        const sentimentScore = response.data.documents[0].sentiment;
-        const confidenceScore = response.data.documents[0].confidenceScores;
+        let sentimentScore = response.data.documents[0].sentiment;
+        let confidenceScore = response.data.documents[0].confidenceScores;
         console.log(`Sentiment: ${sentimentScore}`);
+        console.log('azure/confidence');
 
-        resp = {"confidenceScore": confidenceScore};
+        let resp = {"confidenceScore": confidenceScore};
 
-        return res.json(resp);
+        res.json(resp);
     }
 
     catch (error) {
@@ -151,11 +217,25 @@ app.get('/v1/azure/:confidence', async (req, res) => {
     }
 });
 
-// gives you breakdown for each sentence (text, sentiment, and confidence scores)
+/**
+ * @swagger
+ * /azure/paragraph:
+ *     get:
+ *       description: Returns a breakdown for each sentence (text, sentiment, and confidence scores)
+ *       produces: 
+ *          - application/json
+*       parameters:
+ *          - in: path
+ *            name: paragraph
+ *            description: Statement from the user to input for sentiment analysis
+ *       responses:
+ *          200:
+ *              description: Object containing the sentiment analysis for each sentence
+ */
 app.get('/v1/azure/:paragraph', async (req, res) => {
     try {
         var text = req.params.paragraph;
-        const response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
+        let response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
             documents: [
                 {
                     language: 'en',
@@ -170,14 +250,15 @@ app.get('/v1/azure/:paragraph', async (req, res) => {
             }
         });
 
-        const sentimentScore = response.data.documents[0].sentiment;
+        let sentimentScore = response.data.documents[0].sentiment;
         console.log(`Sentiment: ${sentimentScore}`);
+        console.log('azure/paragraph');
 
         // could order them and separate details...maybe
-        const sentences = response.data.documents[0].sentences;
-        resp = {"sentences": sentences};
+        let sentences = response.data.documents[0].sentences;
+        let resp = {"sentences": sentences};
 
-        return res.json(resp);
+        res.json(resp);
     }
 
     catch (error) {
@@ -185,11 +266,25 @@ app.get('/v1/azure/:paragraph', async (req, res) => {
     }
 });
 
-// gives you which sentences have which sentiments (positive, neutral, and negative)
+/**
+ * @swagger
+ * /azure/scores:
+ *     get:
+ *       description: Returns which sentences have which sentiments (positive, neutral, and negative)
+ *       produces: 
+ *          - application/json
+ *       parameters:
+ *          - in: path
+ *            name: scores
+ *            description: Statement from the user to input for sentiment analysis
+ *       responses:
+ *          200:
+ *              description: Object containing the positive sentences, neutral sentences, and negative sentences.
+ */
 app.get('/v1/azure/:scores', async (req, res) => {
     try {
         var text = req.params.scores;
-        const response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
+        let response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
                 documents: [
                     {
                         language: 'en',
@@ -204,11 +299,12 @@ app.get('/v1/azure/:scores', async (req, res) => {
                 }
             });
 
-        const sentimentScore = response.data.documents[0].sentiment;
+        let sentimentScore = response.data.documents[0].sentiment;
         console.log(`Sentiment: ${sentimentScore}`);
+        console.log('azure/scores');
 
         let sentences = response.data.documents[0].sentences;
-        resp = {
+        let resp = {
             "positive": [],
             "neutral": [],
             "negative": []
@@ -226,7 +322,7 @@ app.get('/v1/azure/:scores', async (req, res) => {
             }
         });
 
-        return res.json(resp);
+        res.json(resp);
     }
 
     catch (error) {
@@ -234,11 +330,25 @@ app.get('/v1/azure/:scores', async (req, res) => {
     }
 });
 
-// gives you breakdown for sentiments and ranking of the positive score
+/**
+ * @swagger
+ * /azure/scorespositive:
+ *     get:
+ *       description: Returns a breakdown for sentiments and ranking of the positive score (most to least positive)
+ *       produces: 
+ *          - application/json
+ *       parameters:
+ *          - in: path
+ *            name: scorespositive
+ *            description: Statement from the user to input for sentiment analysis
+ *       responses:
+ *          200:
+ *              description: Object containing the positive sentences, neutral sentences,a nd negative sentences as well as the positive confidence scores for each sentence.
+ */
 app.get('/v1/azure/:scorespositive', async (req, res) => {
     try {
-        var text = req.params.scoresranked;
-        const response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
+        let text = req.params.scoresranked;
+        let response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
             documents: [
                 {
                     language: 'en',
@@ -253,11 +363,12 @@ app.get('/v1/azure/:scorespositive', async (req, res) => {
             }
         });
 
-        const sentimentScore = response.data.documents[0].sentiment;
+        let sentimentScore = response.data.documents[0].sentiment;
         console.log(`Sentiment: ${sentimentScore}`);
+        console.log('azure/scorespositive');
 
         let sentences = response.data.documents[0].sentences;
-        resp = {
+        let resp = {
             "positive": [],
             "neutral": [],
             "negative": []
@@ -275,7 +386,7 @@ app.get('/v1/azure/:scorespositive', async (req, res) => {
             }
         });
 
-        return res.json(resp);
+        res.json(resp);
     }
 
     catch (error) {
