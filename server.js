@@ -90,7 +90,7 @@ app.get('/v1/azure', async (req, res) => {
  *          200:
  *              description: Object containing the overall sentiment and confidence scores. Also returns a breakdown for each sentence. The breakdown includes the text, length, sentiment, confidence scores, and offset.
  */
-app.get('/v1/azure/:response', async (req, res) => {
+app.get('/v1/azure/response/:response', async (req, res) => {
     try {
         const text = req.params.response;
         const response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
@@ -137,7 +137,7 @@ app.get('/v1/azure/:response', async (req, res) => {
  *          200:
  *              description: Object containing the overall sentiment of the input
  */
-app.get('/v1/azure/:sentiment', async (req, res) => {
+app.get('/v1/azure/sentiment/:sentiment', async (req, res) => {
     try {
         const text = req.params.sentiment;
         const response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
@@ -232,7 +232,7 @@ app.get('/v1/azure/:confidence', async (req, res) => {
  *          200:
  *              description: Object containing the sentiment analysis for each sentence
  */
-app.get('/v1/azure/:paragraph', async (req, res) => {
+app.get('/v1/azure/paragraph/:paragraph', async (req, res) => {
     try {
         var text = req.params.paragraph;
         let response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
@@ -281,7 +281,7 @@ app.get('/v1/azure/:paragraph', async (req, res) => {
  *          200:
  *              description: Object containing the positive sentences, neutral sentences, and negative sentences.
  */
-app.get('/v1/azure/:scores', async (req, res) => {
+app.get('/v1/azure/scores/:scores', async (req, res) => {
     try {
         var text = req.params.scores;
         let response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
@@ -345,7 +345,7 @@ app.get('/v1/azure/:scores', async (req, res) => {
  *          200:
  *              description: Object containing the positive sentences, neutral sentences,a nd negative sentences as well as the positive confidence scores for each sentence.
  */
-app.get('/v1/azure/:scorespositive', async (req, res) => {
+app.get('/v1/azure/scorespositive/:scorespositive', async (req, res) => {
     try {
         let text = req.params.scoresranked;
         let response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
