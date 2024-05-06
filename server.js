@@ -1,7 +1,3 @@
-// https://deadsimplechat.com/blog/environment-variables-in-nodejs/
-// https://learn.microsoft.com/en-us/azure/ai-services/language-service/sentiment-opinion-mining/quickstart?tabs=linux&pivots=programming-language-csharp
-// https://www.yourteaminindia.com/tech-insights/sentiment-analysis-with-node.js-and-ai
-
 const express = require('express');
 const app = express();
 
