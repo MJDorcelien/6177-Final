@@ -92,28 +92,33 @@ app.get('/v1/azure', async (req, res) => {
 app.get('/v1/azure/response/:response', async (req, res) => {
     try {
         const text = req.params.response;
-        const response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
-            documents: [
-                {
-                    language: 'en',
-                    id: '1',
-                    text: text,
-                },
-            ],
-        }, {
-            headers: {
-                'Ocp-Apim-Subscription-Key': key,
-                'Content-Type': 'application/json',
-            }
-        });
-
-        const sentimentScore = response.data.documents[0].sentiment;
-        console.log(`Sentiment: ${sentimentScore}`);
-        console.log('azure/response');
-
-        const resp = response.data;
-
-        res.json(resp);
+        if(text === ":response"){
+            res.json({"error": "Invalid parameter. Please make sure the parameters have been properly input."})
+        }
+        else{
+            const response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
+                documents: [
+                    {
+                        language: 'en',
+                        id: '1',
+                        text: text,
+                    },
+                ],
+            }, {
+                headers: {
+                    'Ocp-Apim-Subscription-Key': key,
+                    'Content-Type': 'application/json',
+                }
+            });
+    
+            const sentimentScore = response.data.documents[0].sentiment;
+            console.log(`Sentiment: ${sentimentScore}`);
+            console.log('azure/response');
+    
+            const resp = response.data;
+    
+            res.json(resp);
+        }
     }
 
     catch (error) {
@@ -142,28 +147,33 @@ app.get('/v1/azure/response/:response', async (req, res) => {
 app.get('/v1/azure/sentiment/:sentiment', async (req, res) => {
     try {
         const text = req.params.sentiment;
-        const response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
-            documents: [
-                {
-                    language: 'en',
-                    id: '1',
-                    text: text,
-                },
-            ],
-        }, {
-            headers: {
-                'Ocp-Apim-Subscription-Key': key,
-                'Content-Type': 'application/json',
-            }
-        });
+        if(text === ":sentiment"){
+            res.json({"error": "Invalid parameter. Please make sure the parameters have been properly input."})
+        }
+        else{
+            const response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
+                documents: [
+                    {
+                        language: 'en',
+                        id: '1',
+                        text: text,
+                    },
+                ],
+            }, {
+                headers: {
+                    'Ocp-Apim-Subscription-Key': key,
+                    'Content-Type': 'application/json',
+                }
+            });
 
-        const sentimentScore = response.data.documents[0].sentiment;
-        console.log(`Sentiment: ${sentimentScore}`);
-        console.log('azure/sentiment');
+            const sentimentScore = response.data.documents[0].sentiment;
+            console.log(`Sentiment: ${sentimentScore}`);
+            console.log('azure/sentiment');
 
-        const resp = {"sentiment": sentimentScore};
+            const resp = {"sentiment": sentimentScore};
 
-        res.json(resp);
+            res.json(resp);
+        }
     }
 
     catch (error) {
@@ -192,29 +202,34 @@ app.get('/v1/azure/sentiment/:sentiment', async (req, res) => {
 app.get('/v1/azure/confidence/:confidence', async (req, res) => {
     try {
         var text = req.params.confidence;
-        let response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
-            documents: [
-                {
-                    language: 'en',
-                    id: '1',
-                    text: text,
-                },
-            ],
-        }, {
-            headers: {
-                'Ocp-Apim-Subscription-Key': key,
-                'Content-Type': 'application/json',
-            }
-        });
+        if(text === ":confidence"){
+            res.json({"error": "Invalid parameter. Please make sure the parameters have been properly input."})
+        }
+        else{
+            let response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
+                documents: [
+                    {
+                        language: 'en',
+                        id: '1',
+                        text: text,
+                    },
+                ],
+            }, {
+                headers: {
+                    'Ocp-Apim-Subscription-Key': key,
+                    'Content-Type': 'application/json',
+                }
+            });
 
-        let sentimentScore = response.data.documents[0].sentiment;
-        let confidenceScore = response.data.documents[0].confidenceScores;
-        console.log(`Sentiment: ${sentimentScore}`);
-        console.log('azure/confidence');
+            let sentimentScore = response.data.documents[0].sentiment;
+            let confidenceScore = response.data.documents[0].confidenceScores;
+            console.log(`Sentiment: ${sentimentScore}`);
+            console.log('azure/confidence');
 
-        let resp = {"confidenceScore": confidenceScore};
+            let resp = {"confidenceScore": confidenceScore};
 
-        res.json(resp);
+            res.json(resp);
+        }
     }
 
     catch (error) {
@@ -243,30 +258,34 @@ app.get('/v1/azure/confidence/:confidence', async (req, res) => {
 app.get('/v1/azure/paragraph/:paragraph', async (req, res) => {
     try {
         var text = req.params.paragraph;
-        let response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
-            documents: [
-                {
-                    language: 'en',
-                    id: '1',
-                    text: text,
-                },
-            ],
-        }, {
-            headers: {
-                'Ocp-Apim-Subscription-Key': key,
-                'Content-Type': 'application/json',
-            }
-        });
+        if(text === ":paragraph"){
+            res.json({"error": "Invalid parameter. Please make sure the parameters have been properly input."})
+        }
+        else{
+            let response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
+                documents: [
+                    {
+                        language: 'en',
+                        id: '1',
+                        text: text,
+                    },
+                ],
+            }, {
+                headers: {
+                    'Ocp-Apim-Subscription-Key': key,
+                    'Content-Type': 'application/json',
+                }
+            });
 
-        let sentimentScore = response.data.documents[0].sentiment;
-        console.log(`Sentiment: ${sentimentScore}`);
-        console.log('azure/paragraph');
+            let sentimentScore = response.data.documents[0].sentiment;
+            console.log(`Sentiment: ${sentimentScore}`);
+            console.log('azure/paragraph');
 
-        // could order them and separate details...maybe
-        let sentences = response.data.documents[0].sentences;
-        let resp = {"sentences": sentences};
+            let sentences = response.data.documents[0].sentences;
+            let resp = {"sentences": sentences};
 
-        res.json(resp);
+            res.json(resp);
+        }
     }
 
     catch (error) {
@@ -295,45 +314,50 @@ app.get('/v1/azure/paragraph/:paragraph', async (req, res) => {
 app.get('/v1/azure/scores/:scores', async (req, res) => {
     try {
         var text = req.params.scores;
-        let response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
-                documents: [
-                    {
-                        language: 'en',
-                        id: '1',
-                        text: text,
-                    },
-                ],
-            }, {
-                headers: {
-                    'Ocp-Apim-Subscription-Key': key,
-                    'Content-Type': 'application/json',
+        if(text === ":scores"){
+            res.json({"error": "Invalid parameter. Please make sure the parameters have been properly input."})
+        }
+        else{
+            let response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
+                    documents: [
+                        {
+                            language: 'en',
+                            id: '1',
+                            text: text,
+                        },
+                    ],
+                }, {
+                    headers: {
+                        'Ocp-Apim-Subscription-Key': key,
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+            let sentimentScore = response.data.documents[0].sentiment;
+            console.log(`Sentiment: ${sentimentScore}`);
+            console.log('azure/scores');
+
+            let sentences = response.data.documents[0].sentences;
+            let resp = {
+                "positive": [],
+                "neutral": [],
+                "negative": []
+            }
+            
+            sentences.forEach(sentence => {
+                if(sentence.sentiment === "positive"){
+                    resp.positive.push(`${sentence.text}`);
+                }
+                else if(sentence.sentiment === "neutral"){
+                    resp.neutral.push(`${sentence.text}`);
+                }
+                else {
+                    resp.negative.push(`${sentence.text}`);
                 }
             });
 
-        let sentimentScore = response.data.documents[0].sentiment;
-        console.log(`Sentiment: ${sentimentScore}`);
-        console.log('azure/scores');
-
-        let sentences = response.data.documents[0].sentences;
-        let resp = {
-            "positive": [],
-            "neutral": [],
-            "negative": []
+            res.json(resp);
         }
-        
-        sentences.forEach(sentence => {
-            if(sentence.sentiment === "positive"){
-                resp.positive.push(`${sentence.text}`);
-            }
-            else if(sentence.sentiment === "neutral"){
-                resp.neutral.push(`${sentence.text}`);
-            }
-            else {
-                resp.negative.push(`${sentence.text}`);
-            }
-        });
-
-        res.json(resp);
     }
 
     catch (error) {
@@ -361,46 +385,51 @@ app.get('/v1/azure/scores/:scores', async (req, res) => {
  */
 app.get('/v1/azure/scorespositive/:scorespositive', async (req, res) => {
     try {
-        let text = req.params.scoresranked;
-        let response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
-            documents: [
-                {
-                    language: 'en',
-                    id: '1',
-                    text: text,
-                },
-            ],
-        }, {
-            headers: {
-                'Ocp-Apim-Subscription-Key': key,
-                'Content-Type': 'application/json',
-            }
-        });
-
-        let sentimentScore = response.data.documents[0].sentiment;
-        console.log(`Sentiment: ${sentimentScore}`);
-        console.log('azure/scorespositive');
-
-        let sentences = response.data.documents[0].sentences;
-        let resp = {
-            "positive": [],
-            "neutral": [],
-            "negative": []
+        let text = req.params.scorespositive;
+        if(text === ":scorespositive"){
+            res.json({"error": "Invalid parameter. Please make sure the parameters have been properly input."})
         }
-        
-        sentences.forEach(sentence => {
-            if(sentence.sentiment === "positive"){                
-                resp.positive.push([sentence.confidenceScores.positive, sentence.text]);
-            }
-            else if(sentence.sentiment === "neutral"){
-                resp.neutral.push([sentence.confidenceScores.positive, sentence.text]);
-            }
-            else {
-                resp.negative.push([sentence.confidenceScores.positive,sentence.text]);
-            }
-        });
+        else{
+            let response = await axios.post(`${endpoint}/text/analytics/v3.0/sentiment`, {
+                documents: [
+                    {
+                        language: 'en',
+                        id: '1',
+                        text: text,
+                    },
+                ],
+            }, {
+                headers: {
+                    'Ocp-Apim-Subscription-Key': key,
+                    'Content-Type': 'application/json',
+                }
+            });
 
-        res.json(resp);
+            let sentimentScore = response.data.documents[0].sentiment;
+            console.log(`Sentiment: ${sentimentScore}`);
+            console.log('azure/scorespositive');
+
+            let sentences = response.data.documents[0].sentences;
+            let resp = {
+                "positive": [],
+                "neutral": [],
+                "negative": []
+            }
+            
+            sentences.forEach(sentence => {
+                if(sentence.sentiment === "positive"){                
+                    resp.positive.push([sentence.confidenceScores.positive, sentence.text]);
+                }
+                else if(sentence.sentiment === "neutral"){
+                    resp.neutral.push([sentence.confidenceScores.positive, sentence.text]);
+                }
+                else {
+                    resp.negative.push([sentence.confidenceScores.positive,sentence.text]);
+                }
+            });
+
+            res.json(resp);
+        }
     }
 
     catch (error) {
