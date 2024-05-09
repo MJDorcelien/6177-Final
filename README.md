@@ -152,8 +152,367 @@ Response:
 ```
 
 ### /vi/azure/response
+This endpoint is a GET method with 0 parameters.
+This endpoint allows a user to view the sentiment analysis on the following phrase: I love this product! Its fantastic".
+
+Response input used for this example: I really like the product. it was easy to use. it was okay. it was not good.
+
+**Swagger**
+
+Running Instance URL:
+```html
+http://24.144.104.32:3000/docs/#/default/get_azure_response__response_
+```
+
+Local Machine URL:
+```url
+http://localhost:3000/docs/#/default/get_azure_response_response_
+```
+
+Response
+![/v1/azure/response Swagger Response](/images/response%20swagger%20response.png)
+
+**PostMan**
+
+Running Instance URL:
+```html
+http://24.144.104.32:3000/v1/azure/response/:response
+```
+
+Local Machine URL:
+```url
+http://localhost:3000/v1/azure/response/:response
+```
+
+Response:
+```json
+{
+    "documents": [
+        {
+            "id": "1",
+            "sentiment": "mixed",
+            "confidenceScores": {
+                "positive": 0.7,
+                "neutral": 0.05,
+                "negative": 0.26
+            },
+            "sentences": [
+                {
+                    "sentiment": "positive",
+                    "confidenceScores": {
+                        "positive": 0.87,
+                        "neutral": 0.12,
+                        "negative": 0.01
+                    },
+                    "offset": 0,
+                    "length": 27,
+                    "text": "I really like the product. "
+                },
+                {
+                    "sentiment": "positive",
+                    "confidenceScores": {
+                        "positive": 0.99,
+                        "neutral": 0.01,
+                        "negative": 0
+                    },
+                    "offset": 27,
+                    "length": 20,
+                    "text": "it was easy to use. "
+                },
+                {
+                    "sentiment": "positive",
+                    "confidenceScores": {
+                        "positive": 0.92,
+                        "neutral": 0.07,
+                        "negative": 0.01
+                    },
+                    "offset": 47,
+                    "length": 13,
+                    "text": "it was okay. "
+                },
+                {
+                    "sentiment": "negative",
+                    "confidenceScores": {
+                        "positive": 0,
+                        "neutral": 0.01,
+                        "negative": 0.99
+                    },
+                    "offset": 60,
+                    "length": 16,
+                    "text": "it was not good."
+                }
+            ],
+            "warnings": []
+        }
+    ],
+    "errors": [],
+    "modelVersion": "2022-11-01"
+}
+```
+
 ### /vi/azure/sentiment
+This endpoint is a GET method with 0 parameters.
+This endpoint allows a user to view the sentiment analysis on the following phrase: I love this product! Its fantastic".
+
+**Swagger**
+
+Running Instance URL:
+```html
+http://24.144.104.32:3000/docs/#/default/get_azure_sentiment_sentiment_
+```
+
+Local Machine URL:
+```url
+http://localhost:3000/docs/#/default/get_azure_sentiment_sentiment_
+```
+
+Response
+![/v1/azure/sentiment Swagger Response](/images/sentiment%20swagger%20response.png)
+
+**PostMan**
+
+Running Instance URL:
+```html
+http://24.144.104.32:3000/v1/azure
+```
+
+Local Machine URL:
+```url
+http://localhost:3000/v1/azure
+```
+
+Response:
+```json
+{
+  "sentiment": "mixed"
+}
+```
+
 ### /vi/azure/confidence
+This endpoint is a GET method with 0 parameters.
+This endpoint allows a user to view the sentiment analysis on the following phrase: I love this product! Its fantastic".
+
+**Swagger**
+
+Running Instance URL:
+```html
+http://24.144.104.32:3000/docs/#/default/get_azure_confidence_confidence_
+```
+
+Local Machine URL:
+```url
+http://localhost:3000/docs/#/default/get_azure_confidence_confidence_
+```
+
+Response
+![/v1/azure/confidence Swagger Response](/images/confidence%20swagger%20response.png)
+
+**PostMan**
+
+Running Instance URL:
+```html
+http://24.144.104.32:3000/v1/azure
+```
+
+Local Machine URL:
+```url
+http://localhost:3000/v1/azure
+```
+
+Response:
+```json
+{
+  "confidenceScore": {
+    "positive": 0.7,
+    "neutral": 0.05,
+    "negative": 0.26
+  }
+}
+```
+
 ### /vi/azure/paragraph
+This endpoint is a GET method with 0 parameters.
+This endpoint allows a user to view the sentiment analysis on the following phrase: I love this product! Its fantastic".
+
+**Swagger**
+
+Running Instance URL:
+```html
+http://24.144.104.32:3000/docs/#/default/get_azure_paragraph_paragraph_
+```
+
+Local Machine URL:
+```url
+http://localhost:3000/docs/#/default/get_azure_paragraph_paragraph_
+```
+
+Response
+![/v1/azure.paragraph Swagger Response](/images/paragraph%20swagger%20response.png)
+
+**PostMan**
+
+Running Instance URL:
+```html
+http://24.144.104.32:3000/v1/azure
+```
+
+Local Machine URL:
+```url
+http://localhost:3000/v1/azure
+```
+
+Response:
+```json
+{
+  "sentences": [
+    {
+      "sentiment": "positive",
+      "confidenceScores": {
+        "positive": 0.87,
+        "neutral": 0.12,
+        "negative": 0.01
+      },
+      "offset": 0,
+      "length": 27,
+      "text": "I really like the product. "
+    },
+    {
+      "sentiment": "positive",
+      "confidenceScores": {
+        "positive": 0.99,
+        "neutral": 0.01,
+        "negative": 0
+      },
+      "offset": 27,
+      "length": 20,
+      "text": "it was easy to use. "
+    },
+    {
+      "sentiment": "positive",
+      "confidenceScores": {
+        "positive": 0.92,
+        "neutral": 0.07,
+        "negative": 0.01
+      },
+      "offset": 47,
+      "length": 13,
+      "text": "it was okay. "
+    },
+    {
+      "sentiment": "negative",
+      "confidenceScores": {
+        "positive": 0,
+        "neutral": 0.01,
+        "negative": 0.99
+      },
+      "offset": 60,
+      "length": 16,
+      "text": "it was not good."
+    }
+  ]
+}
+```
+
 ### /vi/azure/scores
+This endpoint is a GET method with 0 parameters.
+This endpoint allows a user to view the sentiment analysis on the following phrase: I love this product! Its fantastic".
+
+**Swagger**
+
+Running Instance URL:
+```html
+http://24.144.104.32:3000/docs/#/default/get_azure_scores_scores_
+```
+
+Local Machine URL:
+```url
+http://localhost:3000/docs/#/default/get_azure_scores_scores_
+```
+
+Response
+![/v1/azure/scores Swagger Response](/images/scores%20swagger%20response.png)
+
+**PostMan**
+
+Running Instance URL:
+```html
+http://24.144.104.32:3000/v1/azure
+```
+
+Local Machine URL:
+```url
+http://localhost:3000/v1/azure
+```
+
+Response:
+```json
+{
+  "positive": [
+    "I really like the product. ",
+    "it was easy to use. ",
+    "it was okay. "
+  ],
+  "neutral": [],
+  "negative": [
+    "it was not good."
+  ]
+}
+```
+
 ### /vi/azure/scorespositive
+This endpoint is a GET method with 0 parameters.
+This endpoint allows a user to view the sentiment analysis on the following phrase: I love this product! Its fantastic".
+
+**Swagger**
+
+Running Instance URL:
+```html
+http://24.144.104.32:3000/docs/#/default/get_azure_scorespositive_scorespositive_
+```
+
+Local Machine URL:
+```url
+http://localhost:3000/docs/#/default/get_azure_scorespositive_scorespositive_
+```
+
+Response
+![/v1/azure/scorespositive Swagger Response](/images/scorespositive%20swagger%20response.png)
+
+**PostMan**
+
+Running Instance URL:
+```html
+http://24.144.104.32:3000/v1/azure
+```
+
+Local Machine URL:
+```url
+http://localhost:3000/v1/azure
+```
+
+Response:
+```json
+{
+  "positive": [
+    [
+      0.87,
+      "I really like the product. "
+    ],
+    [
+      0.99,
+      "it was easy to use. "
+    ],
+    [
+      0.92,
+      "it was okay. "
+    ]
+  ],
+  "neutral": [],
+  "negative": [
+    [
+      0,
+      "it was not good."
+    ]
+  ]
+}
+```
