@@ -4,6 +4,16 @@ This project utilizes Azure's sentiment analysis.
 The API allows the user to input their own thoughts to receive an analysis on those thoughts.
 To access this API, you can either clone this repository or use the running instance of the API either through [Swagger Docs](http://24.144.104.32:3000/docs/) or PostMan.
 
+## What's left
+**remove this section when i finish everything***
+add explanation for each endpoint
+
+finish setting it up on your own machine
+
+add info about sentiment analysis
+
+add to the table of contents
+
 ## Table of Contents
 [Sentiment Analysis]()
 [Get Started on your Own Machine]()
