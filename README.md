@@ -5,18 +5,18 @@ The API allows the user to input their own thoughts to receive an analysis on th
 To access this API, you can either clone this repository or use the running instance of the API either through [Swagger Docs](http://24.144.104.32:3000/docs/) or PostMan.
 
 ## Table of Contents
-[Sentiment Analysis](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#sentiment-analysis)
-[Get Started on your Own Machine](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#get-started-on-your-own-machine)
-[API Endpoints](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#sentiment-analysis)
+1. [Sentiment Analysis](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#sentiment-analysis)
+2. [Get Started on your Own Machine](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#get-started-on-your-own-machine)
+3. [API Endpoints](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#sentiment-analysis)
 
-## Sentiment Analysis
+## 1. Sentiment Analysis
 Azure's Sentiment Analysis is an AI tool developed by Microsoft Azure. This tool uses AI to analysis text by breaking the text down into individual sentences. These sentences are then further analyzed to determine their overall sentiment which is divided into 3 possible categories: positive, neutral, and negative. After the sentences are analyzed, the entire text submitted is analyzed with 4 possible categories. The first 4 categories are the same as the sentence level analysis, with the additional classification of mixed. 
 
 Azure's Sentiment Analysis also determines the AI's confidence in it's determination. This confidence score is from 0-1. For each analysis, Azure's Sentiment Analysis provides the user with a confidence score in 3 categories: positive, neutral, and negative. Each of these confidence scores must add up to 1.
 
 This project allows a user to utilize Azure's Sentiment Analysis without creating an Azure account (although instructions detailing how to create an account and run this project on your local machine are included). This is done by allowing the user to access the AI through an running instance of Azure's Sentiment Analysis. Using this api, a user is able to fully explore Azure's Sentiment Analysis.
 
-## Get Started on your Own Machine
+## 2. Get Started on your Own Machine
 Ensure that both [git](https://github.com/git-guides/install-git) and [node](https://nodejs.org/en/download/package-manager) are install on your device by running the following command.
 
 ```bash
@@ -53,14 +53,14 @@ Once your environment variables are updated, you can use this command to get you
 node server.js
 ```
 
-## API Endpoints
-[/v1/azure](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#viazure)
-[/v1/azure/response](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#viazureresponse)
-[/v1/azure/sentiment](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#viazuresentiment)
-[/v1/azure/confidence](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#viazureconfidence)
-[/v1/azure/paragraph](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#viazureparagraph)
-[/v1/azure/scores](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#viazurescores)
-[/v1/azure/scorespositive](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#viazurescorespositive)
+## 3. API Endpoints
+- [/v1/azure](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#viazure)
+- [/v1/azure/response](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#viazureresponse)
+- [/v1/azure/sentiment](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#viazuresentiment)
+- [/v1/azure/confidence](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#viazureconfidence)
+- [/v1/azure/paragraph](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#viazureparagraph)
+- [/v1/azure/scores](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#viazurescores)
+- [/v1/azure/scorespositive](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#viazurescorespositive)
 
 NOTE: If the user is running the API on their own machine rather than using the running instance, the following instructions and descriptions are still applicable, but the URLs will need to be changed. The IP address will instead be localhost. For [Swagger](http://localhost:3000/docs) and [PostMan](http://localhost:3000/v1/azure).
 
