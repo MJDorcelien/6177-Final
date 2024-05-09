@@ -45,17 +45,51 @@ start the server
 
 ## API Endpoints
 NOTE: If the user is running the API on their own machine rather than using the running instance, the following instructions and descriptions are still applicable, but the URLs will need to be changed. The IP address will instead be localhost. For [Swagger](http://localhost:3000/docs) and [PostMan](http://localhost:3000/v1/azure).
+
+**Swagger**
+If you're running the API on your own machine, use this host url: [http://localhost:3000/docs](http://localhost:3000/docs) and if you're using the running instance of the API, use this host url: [http://24.144.104.32:3000/docs](http://24.144.104.32:3000/docs).
+
+To run each endpoint on swagger, the user will click on the endpoint they'd like to run. After reading the endpoint description, they'll click on the "Try it out" button. For the /v1/azure input, the user will simply click the "Execute" button to retrieve the response. 
+The endpoint should look like this image: ![/v1/azure Swagger Endpoint](/images/azure%20swagger%20inital.png)
+The request should look like this image:![/v1/azure Swagger Request](/images/azure%20swagger%20request.png)
+The response should look like this image: ![/v1/azure Swagger Response](/images/azure%20swagger%20response.png)
+
+For all other endpoints, the user must input text into the response field. Once the response is input, then the user can hit the "Execute" button to retrieve the response. Clicking the "Clear" button clears the response. To execute the code again, the user simply has to change the input in the "response" field and hit the "Execute" button again.
+The endpoint should look like this image: ![/v1/azure/response Swagger Endpoint](/images/response%20swagger%20inital.png)
+The request should look like this image: ![/v1/azure/response Swagger Request](/images/response%20swagger%20request.png)
+The response should look like this image: ![/v1/azure/response Swagger Response](/images/response%20swagger%20response.png)
+
+**PostMan**
+Create a new HTTP request with a "GET" method. The url used for the request will depend on the endpoint used and the method you're using to access the API. If you're running the API, use this host url: [http://localhost:3000/v1/azure](http://localhost:3000/v1/azure) and if you're using the running instance of the API, use this host url: [http://24.144.104.32:3000/v1/azure](http://24.144.104.32:3000/v1/azure)
+
+For PostMan, only the /v1/azure endpoints does not have a parameter. Once the url and method are defined, the user can pressed the "Send" button to get the response. 
+The url field should look like this image: ![/v1/azure PostMan Request](/images/azure%20postman%20request.png)
+The response should look like this image: 
+
+For all other endpoints there is a parameter, so it's important to make sure the url is correct when making the request. For these endpoints, the user must input a text in the "Value" field corresponding to the parameter key to process the request. Once this value is in the correct field, the user can press the "Send" button to get the response.
+The url field should look like this image: ![/v1/azure/response PostMan Request](/images/azure%20postman%20request.png)
+The response should look like this image: 
+
 ### /vi/azure
 This endpoint is a GET method with 0 parameters.
 This endpoint allows a user to view the sentiment analysis on the following phrase: I love this product! Its fantastic".
 
-[Swagger](http://24.144.104.32:3000/docs/#/default/get_azure)
-In order to use Swagger, the user would click to expand the method and then click the "Try it out" button. 
-Since this endpoint does not have any parameters, the user simply needs to click the "Execute" button to retrieve the sentiment analysis.
+Swagger
+Running Instance URL:
+```html
+http://24.144.104.32:3000/docs/#/default/get_azure
+```
+
+Local Machine URL:
+```url
+http://24.144.104.32:3000/docs/#/default/get_azure
+```
+
+Response
+![/v1/azure Swagger Response](/images/azure%20swagger%20response.png)
 
 [PostMan](http://localhost:3000/v1/azure)
-The user must make a new HTTP request on PostMan. Once a new HTTP request has been made, the following url should be placed in the url field. The method should be changed to a "GET" method. Once the url and method are set, 
-![/v1/azure PostMan Request](/images/azure%20postman%20request.png)
+The user must make a new HTTP request on PostMan. Once a new HTTP request has been made, the following url should be placed in the url field. The method should be changed to a "GET" method. Once the url and method are set, pressed the 
 
 ### /vi/azure/response
 ### /vi/azure/sentiment
