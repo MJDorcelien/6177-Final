@@ -73,7 +73,7 @@ app.get('/v1/azure', async (req, res) => {
 
 /**
  * @swagger
- * /azure/response:
+ * /azure/response/{response}:
  *     get:
  *       description: Returns response based on user input
  *       produces: 
@@ -81,7 +81,10 @@ app.get('/v1/azure', async (req, res) => {
 *       parameters:
  *          - in: path
  *            name: response
+ *            required: true
  *            description: Statement from the user to input for sentiment analysis
+ *            schema: 
+ *              type: string
  *       responses:
  *          200:
  *              description: Object containing the overall sentiment and confidence scores. Also returns a breakdown for each sentence. The breakdown includes the text, length, sentiment, confidence scores, and offset.
@@ -120,7 +123,7 @@ app.get('/v1/azure/response/:response', async (req, res) => {
 
 /**
  * @swagger
- * /azure/sentiment:
+ * /azure/sentiment/{sentiment}:
  *     get:
  *       description: gives you sentiment score based on user input
  *       produces: 
@@ -128,7 +131,10 @@ app.get('/v1/azure/response/:response', async (req, res) => {
 *       parameters:
  *          - in: path
  *            name: sentiment
+ *            required: true
  *            description: Statement from the user to input for sentiment analysis
+ *            schema:
+ *              type: string
  *       responses:
  *          200:
  *              description: Object containing the overall sentiment of the input
@@ -167,7 +173,7 @@ app.get('/v1/azure/sentiment/:sentiment', async (req, res) => {
 
 /**
  * @swagger
- * /azure/confidence:
+ * /azure/confidence/{confidence}:
  *     get:
  *       description: Returns confidence scores based on user input
  *       produces: 
@@ -175,7 +181,10 @@ app.get('/v1/azure/sentiment/:sentiment', async (req, res) => {
 *       parameters:
  *          - in: path
  *            name: confidence
+ *            required: true
  *            description: Statement from the user to input for sentiment analysis
+ *            schema: 
+ *              type: string
  *       responses:
  *          200:
  *              description: Object containing the confidence scores for the overall analysis. The confidence score contains the positive, neutral, and negative confidence scores.
@@ -215,7 +224,7 @@ app.get('/v1/azure/confidence/:confidence', async (req, res) => {
 
 /**
  * @swagger
- * /azure/paragraph:
+ * /azure/paragraph/{paragraph}:
  *     get:
  *       description: Returns a breakdown for each sentence (text, sentiment, and confidence scores)
  *       produces: 
@@ -223,7 +232,10 @@ app.get('/v1/azure/confidence/:confidence', async (req, res) => {
 *       parameters:
  *          - in: path
  *            name: paragraph
+ *            required: true
  *            description: Statement from the user to input for sentiment analysis
+ *            schema:
+ *              type: string
  *       responses:
  *          200:
  *              description: Object containing the sentiment analysis for each sentence
@@ -264,7 +276,7 @@ app.get('/v1/azure/paragraph/:paragraph', async (req, res) => {
 
 /**
  * @swagger
- * /azure/scores:
+ * /azure/scores/{scores}:
  *     get:
  *       description: Returns which sentences have which sentiments (positive, neutral, and negative)
  *       produces: 
@@ -272,7 +284,10 @@ app.get('/v1/azure/paragraph/:paragraph', async (req, res) => {
  *       parameters:
  *          - in: path
  *            name: scores
+ *            required: true
  *            description: Statement from the user to input for sentiment analysis
+ *            schema:
+ *              type: string
  *       responses:
  *          200:
  *              description: Object containing the positive sentences, neutral sentences, and negative sentences.
@@ -328,7 +343,7 @@ app.get('/v1/azure/scores/:scores', async (req, res) => {
 
 /**
  * @swagger
- * /azure/scorespositive:
+ * /azure/scorespositive/{scorespositive}:
  *     get:
  *       description: Returns a breakdown for sentiments and ranking of the positive score (most to least positive)
  *       produces: 
@@ -336,7 +351,10 @@ app.get('/v1/azure/scores/:scores', async (req, res) => {
  *       parameters:
  *          - in: path
  *            name: scorespositive
+ *            required: true
  *            description: Statement from the user to input for sentiment analysis
+ *            schema:
+ *              type: string
  *       responses:
  *          200:
  *              description: Object containing the positive sentences, neutral sentences,a nd negative sentences as well as the positive confidence scores for each sentence.
