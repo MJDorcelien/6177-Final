@@ -4,20 +4,17 @@ This project utilizes Azure's sentiment analysis.
 The API allows the user to input their own thoughts to receive an analysis on those thoughts.
 To access this API, you can either clone this repository or use the running instance of the API either through [Swagger Docs](http://24.144.104.32:3000/docs/) or PostMan.
 
-## What's left
-**remove this section when i finish everything***
-add explanation for each endpoint
-
-add info about sentiment analysis
-
-add to the table of contents
-
 ## Table of Contents
-[Sentiment Analysis]()
-[Get Started on your Own Machine]()
-[API Endpoints]()
+[Sentiment Analysis](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#sentiment-analysis)
+[Get Started on your Own Machine](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#get-started-on-your-own-machine)
+[API Endpoints](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#sentiment-analysis)
 
 ## Sentiment Analysis
+Azure's Sentiment Analysis is an AI tool developed by Microsoft Azure. This tool uses AI to analysis text by breaking the text down into individual sentences. These sentences are then further analyzed to determine their overall sentiment which is divided into 3 possible categories: positive, neutral, and negative. After the sentences are analyzed, the entire text submitted is analyzed with 4 possible categories. The first 4 categories are the same as the sentence level analysis, with the additional classification of mixed. 
+
+Azure's Sentiment Analysis also determines the AI's confidence in it's determination. This confidence score is from 0-1. For each analysis, Azure's Sentiment Analysis provides the user with a confidence score in 3 categories: positive, neutral, and negative. Each of these confidence scores must add up to 1.
+
+This project allows a user to utilize Azure's Sentiment Analysis without creating an Azure account (although instructions detailing how to create an account and run this project on your local machine are included). This is done by allowing the user to access the AI through an running instance of Azure's Sentiment Analysis. Using this api, a user is able to fully explore Azure's Sentiment Analysis.
 
 ## Get Started on your Own Machine
 Ensure that both [git](https://github.com/git-guides/install-git) and [node](https://nodejs.org/en/download/package-manager) are install on your device by running the following command.
@@ -57,6 +54,14 @@ node server.js
 ```
 
 ## API Endpoints
+[/v1/azure](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#viazure)
+[/v1/azure/response](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#viazureresponse)
+[/v1/azure/sentiment](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#viazuresentiment)
+[/v1/azure/confidence](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#viazureconfidence)
+[/v1/azure/paragraph](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#viazureparagraph)
+[/v1/azure/scores](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#viazurescores)
+[/v1/azure/scorespositive](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#viazurescorespositive)
+
 NOTE: If the user is running the API on their own machine rather than using the running instance, the following instructions and descriptions are still applicable, but the URLs will need to be changed. The IP address will instead be localhost. For [Swagger](http://localhost:3000/docs) and [PostMan](http://localhost:3000/v1/azure).
 
 **Swagger**
@@ -93,8 +98,17 @@ The response should look like this image: ![/v1/azure/response PostMan Response]
 The error that occurs when the response field is not filled: ![/v1/azure/response PostMan error](/images/response%20postman%20error.png)
 
 ### /vi/azure
-This endpoint is a GET method with 0 parameters.
-This endpoint allows a user to view the sentiment analysis on the following phrase: I love this product! Its fantastic".
+Qualities of this endpoints:
+- Description
+    - Provides the user with the overall sentiment analysis of predetermined input.
+- GET method
+- Predetermined Input: I love this product! Its fantastic
+- JSON response
+    - sentiment: whether the sentence was "positive," "neutral," or "negative."
+    - confidencescores: percentage of confidence the sentiment analysis has in each potential sentiment category.
+    - offset: start of memory space (not relevant for result interpretation)
+    - length: length of memory space (not relevant for result interpretation)
+    - text: the sentence submitted for sentiment analysis
 
 **Swagger**
 
@@ -168,8 +182,19 @@ Response:
 ```
 
 ### /vi/azure/response
-This endpoint is a GET method with 0 parameters.
-This endpoint allows a user to view the sentiment analysis on the following phrase: I love this product! Its fantastic".
+Qualities of this endpoints:
+- Description
+    - Provides the user with the overall sentiment analysis of their input.
+- GET method
+- 1 parameter
+    - string parameter
+    - this value is the text that's given to the sentiment analysis api to be analyzed
+- JSON response
+    - sentiment: whether the sentence was "positive," "neutral," or "negative."
+    - confidencescores: percentage of confidence the sentiment analysis has in each potential sentiment category.
+    - offset: start of memory space (not relevant for result interpretation)
+    - length: length of memory space (not relevant for result interpretation)
+    - text: the sentence submitted for sentiment analysis
 
 Response input used for this example: I really like the product. it was easy to use. it was okay. it was not good.
 
@@ -267,8 +292,17 @@ Response:
 ```
 
 ### /vi/azure/sentiment
-This endpoint is a GET method with 0 parameters.
-This endpoint allows a user to view the sentiment analysis on the following phrase: I love this product! Its fantastic".
+Qualities of this endpoints:
+- Description
+    - Provides the user with the sentiment of their input. 
+- GET method
+- 1 parameter
+    - string parameter
+    - this value is the text that's given to the sentiment analysis api to be analyzed
+- JSON response
+    - sentiment: whether the sentence was "positive," "neutral," "negative," or "mixed" which is determined by the sentiment analysis
+
+Response input used for this example: I really like the product. it was easy to use. it was okay. it was not good.
 
 **Swagger**
 
@@ -305,8 +339,17 @@ Response:
 ```
 
 ### /vi/azure/confidence
-This endpoint is a GET method with 0 parameters.
-This endpoint allows a user to view the sentiment analysis on the following phrase: I love this product! Its fantastic".
+Qualities of this endpoints:
+- Description
+    - Provides the user with the confidence scores of the sentiment analysis. 
+- GET method
+- 1 parameter
+    - string parameter
+    - this value is the text that's given to the sentiment analysis api to be analyzed
+- JSON response
+    - confidencescores: percentage of confidence the sentiment analysis has in each potential sentiment category.
+
+Response input used for this example: I really like the product. it was easy to use. it was okay. it was not good.
 
 **Swagger**
 
@@ -347,8 +390,21 @@ Response:
 ```
 
 ### /vi/azure/paragraph
-This endpoint is a GET method with 0 parameters.
-This endpoint allows a user to view the sentiment analysis on the following phrase: I love this product! Its fantastic".
+Qualities of this endpoints:
+- Description
+    - Provides the user with the sentiment analysis for each individual sentence. 
+- GET method
+- 1 parameter
+    - string parameter
+    - this value is the text that's given to the sentiment analysis api to be analyzed
+- JSON response
+    - sentiment: whether the sentence was "positive," "neutral," or "negative."
+    - confidencescores: percentage of confidence the sentiment analysis has in each potential sentiment category.
+    - offset: start of memory space (not relevant for result interpretation)
+    - length: length of memory space (not relevant for result interpretation)
+    - text: the sentence submitted for sentiment analysis
+
+Response input used for this example: I really like the product. it was easy to use. it was okay. it was not good.
 
 **Swagger**
 
@@ -430,8 +486,17 @@ Response:
 ```
 
 ### /vi/azure/scores
-This endpoint is a GET method with 0 parameters.
-This endpoint allows a user to view the sentiment analysis on the following phrase: I love this product! Its fantastic".
+Qualities of this endpoints:
+- Description
+    - Arranges the sentences from the parameter into 3 arrays based on their sentiment analysis: positive, neutral, and negative. This is done by comparing confidence scores of the individual sentences.
+- GET method
+- 1 parameter
+    - string parameter
+    - this value is the text that's given to the sentiment analysis api to be analyzed
+- JSON response
+    - string: the sentence submitted for sentiment analysis
+
+Response input used for this example: I really like the product. it was easy to use. it was okay. it was not good.
 
 **Swagger**
 
@@ -478,7 +543,7 @@ Response:
 ### /vi/azure/scorespositive
 Qualities of this endpoints:
 - Description
-    - Arranges the sentences from the parameter into 3 arrays based on their sentiment analysis: positive, neutral, and negative. Within the arrays, the sentences are ordered from most to least positive. This is done by comparing confidence scores.
+    - Arranges the sentences from the parameter into 3 arrays based on their sentiment analysis: positive, neutral, and negative. Within the arrays, the sentences are ordered from most to least positive. This is done by comparing confidence scores of the individual sentences.
 - GET method
 - 1 parameter
     - string parameter
