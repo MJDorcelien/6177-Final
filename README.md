@@ -5,9 +5,10 @@ The API allows the user to input their own thoughts to receive an analysis on th
 To access this API, you can either clone this repository or use the running instance of the API either through [Swagger Docs](http://24.144.104.32:3000/docs/) or PostMan.
 
 ## Table of Contents
-1. [Sentiment Analysis](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#sentiment-analysis)
-2. [Get Started on your Own Machine](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#get-started-on-your-own-machine)
-3. [API Endpoints](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#sentiment-analysis)
+1. [Sentiment Analysis](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#1-sentiment-analysis)
+2. [Get Started on your Own Machine](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#2-get-started-on-your-own-machine)
+3. [API Endpoints](https://github.com/MJDorcelien/6177-Final?tab=readme-ov-file#3-api-endpoints)
+Note: If you're only using the running instance, you can skip section 2 and go straight to section 3.
 
 ## 1. Sentiment Analysis
 Azure's Sentiment Analysis is an AI tool developed by Microsoft Azure. This tool uses AI to analysis text by breaking the text down into individual sentences. These sentences are then further analyzed to determine their overall sentiment which is divided into 3 possible categories: positive, neutral, and negative. After the sentences are analyzed, the entire text submitted is analyzed with 4 possible categories. The first 4 categories are the same as the sentence level analysis, with the additional classification of mixed. 
